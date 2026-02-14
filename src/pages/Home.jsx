@@ -3,7 +3,7 @@ export default function Home() {
         <main className="home-page">
             <div className="home-container">
                 <img
-                    src="/defualtsprite.png"
+                    src="/fixedefault.png"
                     alt="Tamagotchi default"
                     className="home-image"
                 />
