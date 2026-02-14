@@ -1,0 +1,12 @@
+.game-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #e8f4ff 0%, #d4e9ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.game-container {
+  text-align: center;
+}

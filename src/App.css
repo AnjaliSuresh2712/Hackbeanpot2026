@@ -31,6 +31,15 @@
   animation: munch 0.6s ease-in-out infinite;
 }
 
+.home-image--growing {
+  animation: growFull 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  z-index: 100;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @keyframes munch {
   0% {
     transform: translateY(0) scale(1);
@@ -42,5 +51,17 @@
 
   100% {
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes growFull {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(8);
+    opacity: 0.3;
   }
 }
