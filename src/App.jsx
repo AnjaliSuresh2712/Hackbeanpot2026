@@ -1,11 +1,9 @@
 import './App.css'
+import Home from './pages/Home.jsx'
 
 function App() {
   return (
-    <main className="app">
-      <h1>Hackbeanpot 2026</h1>
-      <p>Ready to build.</p>
-    </main>
+    <Home />
   )
 }
 
