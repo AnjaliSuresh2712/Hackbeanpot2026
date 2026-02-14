@@ -1,5 +1,20 @@
-.app {
-  max-width: 960px;
-  margin: 0 auto;
+.home-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fffaf0 0%, #f7efdd 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   padding: 2rem;
+}
+
+.home-image {
+  width: min(70vw, 640px);
+  height: auto;
+  image-rendering: pixelated;
 }
