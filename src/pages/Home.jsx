@@ -12,7 +12,7 @@ export default function Home() {
         clearTimeout(eatTimeoutRef.current)
         eatTimeoutRef.current = setTimeout(() => {
             setIsEating(false)
-        }, 4000)
+        }, 2500)
     }
 
     return (
