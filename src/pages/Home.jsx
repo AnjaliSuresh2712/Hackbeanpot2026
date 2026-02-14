@@ -1,3 +1,5 @@
+import UploadBox from '../components/UploadBox.jsx'
+
 export default function Home() {
     return (
         <main className="home-page">
@@ -7,6 +9,9 @@ export default function Home() {
                     alt="Tamagotchi default"
                     className="home-image"
                 />
+                <div className="home-actions">
+                    <UploadBox />
+                </div>
             </div>
         </main>
     )

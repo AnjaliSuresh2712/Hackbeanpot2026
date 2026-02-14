@@ -9,12 +9,20 @@
 .home-container {
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: 2rem;
+  gap: 1.5rem;
+  padding: 2.5rem 2rem 3rem;
 }
 
 .home-image {
   width: min(70vw, 640px);
   height: auto;
   image-rendering: pixelated;
+}
+
+.home-actions {
+  display: flex;
+  justify-content: center;
 }
