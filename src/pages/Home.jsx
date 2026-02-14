@@ -1,22 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import UploadBox from '../components/UploadBox.jsx'
 
 export default function Home() {
-    const [isMouthOpen, setIsMouthOpen] = useState(false)
+    const [isEating, setIsEating] = useState(false)
+    const eatTimeoutRef = useRef(null)
+
+    useEffect(() => () => clearTimeout(eatTimeoutRef.current), [])
+
+    const handleUpload = () => {
+        setIsEating(true)
+        clearTimeout(eatTimeoutRef.current)
+        eatTimeoutRef.current = setTimeout(() => {
+            setIsEating(false)
+        }, 4000)
+    }
 
     return (
         <main className="home-page">
             <div className="home-container">
                 <img
-                    src={isMouthOpen ? '/openmouth.png' : '/fixedefault.png'}
+                    src={isEating ? '/openmouth.png' : '/fixedefault.png'}
                     alt="Tamagotchi"
-                    className="home-image"
+                    className={`home-image${isEating ? ' home-image--eating' : ''}`}
                 />
                 <div className="home-actions">
-                    <UploadBox
-                        onOpen={() => setIsMouthOpen(true)}
-                        onClose={() => setIsMouthOpen(false)}
-                    />
+                    <UploadBox onUpload={handleUpload} />
                 </div>
             </div>
         </main>

@@ -9,10 +9,11 @@
 .home-container {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1.5rem;
   padding: 2.5rem 2rem 3rem;
-  position: relative;
 }
 
 .home-image {
@@ -24,21 +25,22 @@
 .home-actions {
   display: flex;
   justify-content: center;
-  position: absolute;
-  right: 3rem;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
-@media (max-width: 900px) {
-  .home-actions {
-    position: static;
-    transform: none;
-    margin-top: 1.5rem;
+.home-image--eating {
+  animation: munch 0.6s ease-in-out infinite;
+}
+
+@keyframes munch {
+  0% {
+    transform: translateY(0) scale(1);
   }
 
-  .home-container {
-    flex-direction: column;
-    gap: 1.5rem;
+  50% {
+    transform: translateY(6px) scale(0.98);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
   }
 }
