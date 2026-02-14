@@ -15,8 +15,8 @@ export default function UploadBox({ onUpload }) {
                 multiple
                 onChange={handleChange}
             />
-            <span className="upload-title">Feed the Tomodachi!!!</span>
-            <span className="upload-subtext">Upload your study files here</span>
+            <span className="upload-title">Feed!</span>
+            <span className="upload-subtext">Upload study files here</span>
         </label>
     )
 }

@@ -17,12 +17,12 @@ export default function Home({ onStart }) {
     const handleUpload = () => {
         setIsEating(true)
         clearTimeout(eatTimeoutRef.current)
-        
+
         // Eating animation for 2.5 seconds
         eatTimeoutRef.current = setTimeout(() => {
             setIsEating(false)
             setIsGrowing(true)
-            
+
             // Growth animation for 0.8 seconds, then switch pages
             growTimeoutRef.current = setTimeout(() => {
                 onStart?.()
