@@ -1,0 +1,99 @@
+.pet {
+  width: 300px;
+  max-width: 100%;
+  padding: 18px 16px;
+  background: #c6ecae;
+  border: 6px solid #885053;
+  border-radius: 16px;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #2a2131;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.pet__status {
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  text-align: center;
+  color: #885053;
+  margin-bottom: 10px;
+}
+
+.pet__stage {
+  display: grid;
+  place-items: center;
+  padding: 12px 10px;
+  border-radius: 14px;
+  border: 4px solid rgba(136, 80, 83, 0.3);
+  background:
+    radial-gradient(14px 14px at 22px 18px, rgba(119, 125, 167, 0.18) 0%, rgba(119, 125, 167, 0) 70%),
+    radial-gradient(14px 14px at 70px 50px, rgba(213, 87, 59, 0.12) 0%, rgba(213, 87, 59, 0) 70%),
+    rgba(255, 250, 240, 0.55);
+}
+
+.pet__sprite {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.pet__hp {
+  margin-top: 12px;
+}
+
+.pet__hpTrack {
+  width: 100%;
+  height: 18px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(136, 80, 83, 0.2);
+  border: 2px solid #885053;
+}
+
+.pet__hpFill {
+  height: 100%;
+  transition: width 240ms ease, background-color 240ms ease;
+}
+
+.pet__hpLabel {
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 900;
+  color: #2a2131;
+}
+
+.breathe {
+  animation: pet-breathe 3s infinite ease-in-out;
+}
+
+.bounce {
+  animation: pet-bounce 0.6s infinite ease-in-out alternate;
+}
+
+.shake {
+  animation: pet-shake 0.45s infinite;
+  filter: grayscale(0.4);
+}
+
+.dead {
+  filter: grayscale(1) brightness(0.72);
+  transform: rotate(180deg);
+}
+
+@keyframes pet-breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pet-bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+@keyframes pet-shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
