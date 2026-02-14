@@ -9,11 +9,10 @@
 .home-container {
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
   padding: 2.5rem 2rem 3rem;
+  position: relative;
 }
 
 .home-image {
@@ -25,4 +24,21 @@
 .home-actions {
   display: flex;
   justify-content: center;
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 900px) {
+  .home-actions {
+    position: static;
+    transform: none;
+    margin-top: 1.5rem;
+  }
+
+  .home-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }
