@@ -31,7 +31,7 @@ export default function Home({ onStart }) {
     }
 
     return (
-        <main className="home-page">
+        <main className={`home-page${isGrowing ? ' home-page--growing' : ''}`}>
             <div className="home-container">
                 <img
                     src={isEating ? '/openmouth.png' : '/fixedefault.png'}

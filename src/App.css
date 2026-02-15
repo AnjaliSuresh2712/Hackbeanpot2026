@@ -4,6 +4,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.home-page--growing {
+  animation: fadeToBlack 0.8s ease-out forwards;
+}
+
+@keyframes fadeToBlack {
+  0% {
+    background: linear-gradient(180deg, #fffaf0 0%, #f7efdd 100%);
+  }
+
+  100% {
+    background: #000000;
+  }
 }
 
 .home-container {
@@ -57,11 +72,9 @@
 @keyframes growFull {
   0% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
   }
 
   100% {
     transform: translate(-50%, -50%) scale(8);
-    opacity: 0.3;
   }
 }
