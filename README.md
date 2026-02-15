@@ -1,4 +1,4 @@
-# StudiGotchi (Study Buddy)
+# StudiGotchi
 
 A study app that turns your PDFs (lecture slides, notes) into quiz questions. Upload a file, answer multiple-choice questions, and keep your tamagotchi-style pet healthy by getting answers right.
 
@@ -44,19 +44,28 @@ pip install -r requirements.txt
 
 **Configure Snowflake** (required for the game to generate questions):
 
-1. Copy the example env file and edit it with your values:
+1. Create an env file and edit it with your values:
    ```bash
-   cp .env.example .env
+   touch .env
    ```
-2. Open `backend/.env` and set:
+
+2. You can copy this into that file:
+   ```bash
+   SNOWFLAKE_ACCOUNT= <info>
+   SNOWFLAKE_USER= <info>
+   NOWFLAKE_PASSWORD= <info>
+   SNOWFLAKE_WAREHOUSE= <info>
+   SNOWFLAKE_DATABASE= <info>
+   SNOWFLAKE_SCHEMA= <info>
+   ```
+
+3. Open `backend/.env` and set:
    - `SNOWFLAKE_ACCOUNT` — your account identifier (e.g. `xy12345.us-east-1` from the Snowflake URL after login)
    - `SNOWFLAKE_USER` — your Snowflake username
    - `SNOWFLAKE_PASSWORD` — your Snowflake password
    - `SNOWFLAKE_WAREHOUSE` — e.g. `COMPUTE_WH` (create one in Snowflake if needed)
-   - `SNOWFLAKE_DATABASE` — e.g. `STUDY_BUDDY` (create with `CREATE DATABASE STUDY_BUDDY;` in a Snowflake worksheet)
+   - `SNOWFLAKE_DATABASE` — e.g. `STUDY_BUDDY` (create with `CREATE DATABASE STUDY_BUDDY;` in a Snowflake SQL file in workspace)
    - `SNOWFLAKE_SCHEMA` — e.g. `PUBLIC`
-
-For detailed Snowflake setup (warehouse, database, Cortex permissions), see **[backend/SNOWFLAKE_SETUP.md](backend/SNOWFLAKE_SETUP.md)**.
 
 Start the backend:
 
