@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import './QuizCard.css'
 
+const LETTER_TO_INDEX = { A: 0, B: 1, C: 2, D: 3 }
+
 const normalizeQuiz = (quiz) => {
   const safeQuiz = quiz && typeof quiz === 'object' ? quiz : {}
   const id = safeQuiz.id ?? safeQuiz.quizId ?? safeQuiz.questionId ?? 'quiz'
@@ -21,7 +23,11 @@ const normalizeQuiz = (quiz) => {
     safeQuiz.answerIndex ??
     safeQuiz.answer_index
 
-  const correctIndex = Number.isFinite(Number(correctIndexRaw)) ? Number(correctIndexRaw) : -1
+  let correctIndex = Number.isFinite(Number(correctIndexRaw)) ? Number(correctIndexRaw) : -1
+  if (correctIndex < 0 && safeQuiz.correct_answer != null) {
+    const letter = String(safeQuiz.correct_answer).trim().toUpperCase()
+    correctIndex = LETTER_TO_INDEX[letter] ?? -1
+  }
   const explanation = safeQuiz.explanation ?? safeQuiz.rationale ?? ''
 
   return { id, question, options, correctIndex, explanation }
