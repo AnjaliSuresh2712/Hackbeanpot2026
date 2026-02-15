@@ -27,7 +27,7 @@ export default function Home({ onStart }) {
             growTimeoutRef.current = setTimeout(() => {
                 onStart?.()
             }, 800)
-        }, 2500)
+        }, 1900)
     }
 
     return (
