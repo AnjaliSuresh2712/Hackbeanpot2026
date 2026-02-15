@@ -42,8 +42,115 @@
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
 }
 
+.game__goback {
+  appearance: none;
+  border: 4px solid #2a2131;
+  background: rgba(255, 250, 240, 0.95);
+  color: #2a2131;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.18);
+  margin-top: 8px;
+}
+
+.game__goback:hover {
+  background: #fffaf0;
+}
+
+.game__goback:active {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+}
+
 .game__meta {
   font-weight: 900;
   color: #fffaf0;
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Finish modal */
+.game__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.game__modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(42, 33, 49, 0.6);
+}
+
+.game__modalCard {
+  position: relative;
+  border: 6px solid #885053;
+  border-radius: 16px;
+  padding: 24px;
+  background: rgba(255, 250, 240, 0.98);
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
+  color: #2a2131;
+  max-width: 360px;
+  width: 100%;
+}
+
+.game__modalTitle {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.game__modalText {
+  margin: 0 0 20px;
+  font-weight: 700;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.game__modalActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.game__modalBtn {
+  appearance: none;
+  border: 4px solid #2a2131;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.18);
+  flex: 1;
+  min-width: 120px;
+}
+
+.game__modalBtn--primary {
+  background: #d5573b;
+  color: #fffaf0;
+}
+
+.game__modalBtn--primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+}
+
+.game__modalBtn--secondary {
+  background: rgba(255, 250, 240, 0.95);
+  color: #2a2131;
+}
+
+.game__modalBtn--secondary:hover {
+  background: #fffaf0;
+}
+
+.game__modalBtn--secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
 }

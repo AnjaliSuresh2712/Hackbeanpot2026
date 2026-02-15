@@ -2,9 +2,12 @@
 Question generation module using Snowflake Cortex LLM
 """
 from typing import List, Dict
+import logging
 import snowflake.connector
 import json
 import re
+
+log = logging.getLogger(__name__)
 
 # Health impact configuration based on difficulty
 HEALTH_IMPACTS = {
@@ -157,16 +160,12 @@ Return ONLY the JSON array.""".replace(
                 json_str = json_match.group(0) if json_match else response_text
                 question_data = json.loads(json_str)
             except (json.JSONDecodeError, AttributeError) as e:
-                raise ValueError(
-                    f"LLM returned invalid JSON for {difficulty} questions: {e}. "
-                    "Check Snowflake Cortex is enabled and the model returned valid JSON."
-                ) from e
+                log.warning("LLM returned invalid JSON for %s: %s. Skipping this difficulty.", difficulty, e)
+                continue
 
             if not isinstance(question_data, list):
-                raise ValueError(
-                    f"LLM did not return a JSON array for {difficulty}. "
-                    "Check Snowflake Cortex response format."
-                )
+                log.warning("LLM did not return a JSON array for %s. Skipping this difficulty.", difficulty)
+                continue
 
             impacts = HEALTH_IMPACTS[difficulty]
             n_before_difficulty = len(questions)
@@ -199,10 +198,7 @@ Return ONLY the JSON array.""".replace(
                     "health_impact": {"correct": impacts["correct"], "wrong": impacts["wrong"]},
                 })
             if len(questions) == n_before_difficulty:
-                raise ValueError(
-                    f"LLM returned no valid {difficulty} questions (need 4 unique options and correct_answer A-D). "
-                    "Try again or check the model output."
-                )
+                log.warning("LLM returned no valid %s questions (need 4 unique options and correct_answer A-D). Skipping.", difficulty)
 
         if not questions:
             raise ValueError(

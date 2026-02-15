@@ -3,12 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import os
+import logging
 from dotenv import load_dotenv
 
 from pdf_processor import extract_text_from_pdf
 from question_generator import generate_questions
 
 load_dotenv()
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
 
 SNOWFLAKE_REQUIRED_MSG = (
     "Snowflake is not configured. Set SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, and SNOWFLAKE_PASSWORD in backend/.env to generate questions."
@@ -116,8 +119,11 @@ async def upload_pdf(file: UploadFile = File(...)):
         
         if not text or len(text.strip()) < 100:
             raise HTTPException(
-                status_code=400, 
-                detail="PDF appears to be empty or could not extract sufficient text"
+                status_code=400,
+                detail=(
+                    "This PDF doesn't have enough extractable text (we need at least 100 characters). "
+                    "Try lecture slides, notes, or a text-heavy article."
+                ),
             )
         
         return {
@@ -137,7 +143,10 @@ async def generate_questions_endpoint(body: GenerateQuestionsRequest):
     """
     pdf_text = (body.pdf_text or "").strip()
     if len(pdf_text) < 100:
-        raise HTTPException(status_code=400, detail="PDF text is too short or empty")
+        raise HTTPException(
+            status_code=400,
+            detail="PDF text is too short or empty. Use a document with more text (e.g. lecture notes or an article).",
+        )
 
     conn = get_snowflake_conn()
     if not conn:
@@ -160,6 +169,7 @@ async def generate_questions_endpoint(body: GenerateQuestionsRequest):
     except HTTPException:
         raise
     except Exception as e:
+        log.exception("generate-questions failed")
         raise HTTPException(status_code=500, detail=f"Error generating questions: {str(e)}")
 
 @app.post("/upload-and-generate")
@@ -189,7 +199,10 @@ async def upload_and_generate(
     if not text or len(text.strip()) < 100:
         raise HTTPException(
             status_code=400,
-            detail="PDF appears to be empty or could not extract sufficient text",
+            detail=(
+                "This PDF doesn't have enough extractable text to generate questions (we need at least 100 characters). "
+                "Image-based or very short PDFs (e.g. some resumes) often don't work. Try lecture slides, notes, or an article."
+            ),
         )
 
     conn = get_snowflake_conn()
@@ -213,6 +226,7 @@ async def upload_and_generate(
     except HTTPException:
         raise
     except Exception as e:
+        log.exception("upload-and-generate failed")
         raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
 
 @app.get("/health-impacts")

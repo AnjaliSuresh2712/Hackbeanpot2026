@@ -12,10 +12,15 @@ function App() {
     setCurrentPage('game')
   }
 
+  const handleGoBack = () => {
+    setQuestions(null)
+    setCurrentPage('home')
+  }
+
   return currentPage === 'home' ? (
     <Home onStart={handleStart} />
   ) : (
-    <Game questions={questions} />
+    <Game questions={questions} onGoBack={handleGoBack} />
   )
 }
 
