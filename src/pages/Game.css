@@ -1,0 +1,49 @@
+.game {
+  min-height: 100vh;
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  background: radial-gradient(900px 700px at 30% 20%, #8d92bf 0%, #777da7 55%, #5a5f84 100%);
+  color: #2a2131;
+}
+
+@media (min-width: 900px) {
+  .game {
+    grid-template-columns: 360px 1fr;
+    align-items: start;
+  }
+}
+
+.game__left {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.game__right {
+  display: grid;
+  gap: 12px;
+}
+
+.game__feed {
+  appearance: none;
+  border: 4px solid #2a2131;
+  background: #d5573b;
+  color: #fffaf0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.18);
+}
+
+.game__feed:active {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+}
+
+.game__meta {
+  font-weight: 900;
+  color: #fffaf0;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}

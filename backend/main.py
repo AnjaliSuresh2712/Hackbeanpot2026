@@ -4,9 +4,9 @@ from pydantic import BaseModel
 from typing import List, Optional
 import os
 from dotenv import load_dotenv
-import snowflake.connector
+
 from pdf_processor import extract_text_from_pdf
-from question_generator import generate_questions
+from question_generator import generate_questions_mock
 
 load_dotenv()
 
@@ -20,14 +20,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Snowflake connection configuration
-SNOWFLAKE_ACCOUNT = os.getenv("SNOWFLAKE_ACCOUNT")
-SNOWFLAKE_USER = os.getenv("SNOWFLAKE_USER")
-SNOWFLAKE_PASSWORD = os.getenv("SNOWFLAKE_PASSWORD")
-SNOWFLAKE_WAREHOUSE = os.getenv("SNOWFLAKE_WAREHOUSE", "COMPUTE_WH")
-SNOWFLAKE_DATABASE = os.getenv("SNOWFLAKE_DATABASE", "STUDY_BUDDY")
-SNOWFLAKE_SCHEMA = os.getenv("SNOWFLAKE_SCHEMA", "PUBLIC")
 
 # Question models
 class Question(BaseModel):
@@ -52,27 +44,6 @@ HEALTH_IMPACTS = {
     "medium": {"correct": 10, "wrong": -5},
     "hard": {"correct": 20, "wrong": -10}
 }
-
-def get_snowflake_connection():
-    """Create and return a Snowflake connection"""
-    if not all([SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD]):
-        raise HTTPException(
-            status_code=500, 
-            detail="Snowflake credentials not configured. Please set SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, and SNOWFLAKE_PASSWORD in .env file"
-        )
-    
-    try:
-        conn = snowflake.connector.connect(
-            user=SNOWFLAKE_USER,
-            password=SNOWFLAKE_PASSWORD,
-            account=SNOWFLAKE_ACCOUNT,
-            warehouse=SNOWFLAKE_WAREHOUSE,
-            database=SNOWFLAKE_DATABASE,
-            schema=SNOWFLAKE_SCHEMA
-        )
-        return conn
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to connect to Snowflake: {str(e)}")
 
 @app.get("/")
 async def root():
@@ -128,7 +99,8 @@ async def generate_questions_endpoint(
     num_hard: int = 2
 ):
     """
-    Generate questions from PDF text using Snowflake Cortex LLM.
+    Generate questions from PDF text.
+    Uses mock questions for development/testing without Snowflake.
     
     Args:
         pdf_text: The extracted text from the PDF
@@ -140,13 +112,12 @@ async def generate_questions_endpoint(
         raise HTTPException(status_code=400, detail="PDF text is too short or empty")
     
     try:
-        # Generate questions using Snowflake Cortex
-        questions = generate_questions(
+        # Generate mock questions for testing
+        questions = generate_questions_mock(
             pdf_text=pdf_text,
             num_easy=num_easy,
             num_medium=num_medium,
-            num_hard=num_hard,
-            snowflake_conn=get_snowflake_connection()
+            num_hard=num_hard
         )
         
         return QuestionResponse(
@@ -190,13 +161,12 @@ async def upload_and_generate(
                 detail="PDF appears to be empty or could not extract sufficient text"
             )
         
-        # Generate questions
-        questions = generate_questions(
+        # Generate mock questions for testing
+        questions = generate_questions_mock(
             pdf_text=text,
             num_easy=num_easy,
             num_medium=num_medium,
-            num_hard=num_hard,
-            snowflake_conn=get_snowflake_connection()
+            num_hard=num_hard
         )
         
         return QuestionResponse(

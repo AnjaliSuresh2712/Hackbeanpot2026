@@ -201,3 +201,75 @@ def create_fallback_questions(text: str, num_easy: int, num_medium: int, num_har
     
     return questions
 
+def generate_questions_mock(
+    pdf_text: str,
+    num_easy: int,
+    num_medium: int,
+    num_hard: int
+) -> List[Dict]:
+    """
+    Generate mock questions for testing without Snowflake.
+    This allows you to test the frontend and game mechanics.
+    
+    Args:
+        pdf_text: The text extracted from the PDF
+        num_easy: Number of easy questions to generate
+        num_medium: Number of medium questions to generate
+        num_hard: Number of hard questions to generate
+        
+    Returns:
+        List of question dictionaries with difficulty, question, options, and correct_answer
+    """
+    questions = []
+    
+    # Extract keywords from the PDF text to make questions more relevant
+    words = pdf_text.split()[:50]  # Get first 50 words
+    topic = " ".join(words[:5]) if len(words) >= 5 else "the content"
+    
+    # Generate easy questions
+    for i in range(num_easy):
+        questions.append({
+            "question": f"What is a basic concept related to {topic}?",
+            "difficulty": "easy",
+            "options": [
+                "It is a fundamental building block",
+                "It is an advanced concept",
+                "It is not relevant",
+                "It is undefined"
+            ],
+            "correct_answer": "A",
+            "health_impact": HEALTH_IMPACTS["easy"]["correct"]
+        })
+    
+    # Generate medium questions
+    for i in range(num_medium):
+        questions.append({
+            "question": f"How can you apply the principles of {topic} in practice?",
+            "difficulty": "medium",
+            "options": [
+                "By understanding the core principles and adapting them",
+                "By memorizing definitions only",
+                "By avoiding practical implementation",
+                "By ignoring context and details"
+            ],
+            "correct_answer": "A",
+            "health_impact": HEALTH_IMPACTS["medium"]["correct"]
+        })
+    
+    # Generate hard questions
+    for i in range(num_hard):
+        questions.append({
+            "question": f"What are the implications and connections between different aspects of {topic}?",
+            "difficulty": "hard",
+            "options": [
+                "Multiple interconnected concepts that require synthesis and critical analysis",
+                "Simple facts with no connection",
+                "Concepts that are completely independent",
+                "Information that contradicts itself"
+            ],
+            "correct_answer": "A",
+            "health_impact": HEALTH_IMPACTS["hard"]["correct"]
+        })
+    
+    return questions
+

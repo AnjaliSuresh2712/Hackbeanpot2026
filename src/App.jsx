@@ -5,11 +5,17 @@ import Game from './pages/Game.jsx'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
+  const [questions, setQuestions] = useState(null)
+
+  const handleStart = (uploadedQuestions) => {
+    setQuestions(uploadedQuestions)
+    setCurrentPage('game')
+  }
 
   return currentPage === 'home' ? (
-    <Home onStart={() => setCurrentPage('game')} />
+    <Home onStart={handleStart} />
   ) : (
-    <Game />
+    <Game questions={questions} />
   )
 }
 

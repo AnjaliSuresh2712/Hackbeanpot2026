@@ -4,6 +4,8 @@ import UploadBox from '../components/UploadBox.jsx'
 export default function Home({ onStart }) {
     const [isEating, setIsEating] = useState(false)
     const [isGrowing, setIsGrowing] = useState(false)
+    const [questions, setQuestions] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const eatTimeoutRef = useRef(null)
     const growTimeoutRef = useRef(null)
 
@@ -14,7 +16,9 @@ export default function Home({ onStart }) {
         }
     }, [])
 
-    const handleUpload = () => {
+    const handleUpload = (uploadedQuestions) => {
+        setQuestions(uploadedQuestions)
+        setIsLoading(false)
         setIsEating(true)
         clearTimeout(eatTimeoutRef.current)
 
@@ -25,7 +29,7 @@ export default function Home({ onStart }) {
 
             // Growth animation for 0.8 seconds, then switch pages
             growTimeoutRef.current = setTimeout(() => {
-                onStart?.()
+                onStart?.(uploadedQuestions)
             }, 800)
         }, 1900)
     }
@@ -40,7 +44,7 @@ export default function Home({ onStart }) {
                 />
                 {!isGrowing && (
                     <div className="home-actions">
-                        <UploadBox onUpload={handleUpload} />
+                        <UploadBox onUpload={handleUpload} onLoading={setIsLoading} />
                     </div>
                 )}
             </div>
