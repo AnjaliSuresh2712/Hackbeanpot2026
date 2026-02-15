@@ -21,7 +21,7 @@ function Game({ questions, onGoBack }) {
     // Use health impact from backend question if available, otherwise use defaults
     const delta = correct ? (quiz?.health_impact?.correct || 8) : (quiz?.health_impact?.wrong || -12)
     setHealth((hp) => clamp(hp + delta, 0, 100))
-    
+
     // Only allow feeding if answer was correct
     setCanFeed(correct)
   }
@@ -64,11 +64,7 @@ function Game({ questions, onGoBack }) {
     <main className="game">
       <div className="game__left">
         <PetDisplay health={health} isEating={isEating} />
-        {canFeed && (
-          <button className="game__feed" type="button" onClick={handleFeed}>
-            Feed
-          </button>
-        )}
+        {canFeed}
         <button
           className="game__goback"
           type="button"
